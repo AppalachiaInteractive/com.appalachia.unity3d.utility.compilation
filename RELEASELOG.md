@@ -9,7 +9,7 @@
 ```
 
 
-# 0.1.3
+# 0.1.4
 | Hash | Date | Author | Changes |
 |------|------|--------|---------|
 | 849fe22 | 2021-05-06 | Chris Schubert | Updating UI notes, display name, and README.md |

@@ -9,7 +9,7 @@ Something went wrong...
 ## Releasing
 | Hash | Date | Author | Changes |
 |------|------|--------|---------|
-| 849fe22 | 2021-05-06 | Chris Schubert | Updating UI notes, display name, and README.md |
+\n\n ## Tag: v0.1.3\n| Hash | Date | Author | Changes |\n|------|------|--------|---------|\n| 849fe22 | 2021-05-06 | Chris Schubert | Updating UI notes, display name, and README.md |
 \n\n ## Tag: v0.1.2\n| Hash | Date | Author | Changes |\n|------|------|--------|---------|\n| 0d9b3de | 2021-05-04 | Chris Schubert | Update README.md |
 | f56e1c8 | 2021-05-04 | Chris Schubert | Merging readme |
 | 6ef57bd | 2021-05-04 | Chris Schubert | Adding UI piece and improving symbol management |
