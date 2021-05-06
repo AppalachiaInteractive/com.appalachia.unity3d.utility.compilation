@@ -26,6 +26,14 @@ namespace Appalachia.Utility.Compilation
         {
             ScriptingDefineSettings.Initialize();
 
+            EditorGUILayout.HelpBox(
+                "When compilation finishes, all assemblies in the project will be scanned.  " +
+                "If the filter is enabled, all assemblies not passing the filter will be removed.  " +
+                "Those remaining will have an all-caps, underscore-separated version of their assembly " +
+                "name added to the Player's scripting defines.",
+                MessageType.Info
+            );
+            
             DrawWarnIfDisabled();
             DrawEnable();
             DrawFiltered();
