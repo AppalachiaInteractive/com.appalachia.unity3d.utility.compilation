@@ -1,10 +1,10 @@
 {
   "name": "com.appalachia.unity3d.utility.compilation",
   "displayName": "Automatic Scripting Defines for Unity3D",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "unity": "2020.3",
   "description": "Automatic C# Script Defines for Unity3D projects.  For example, for the current project, a scripting define APPALACHIA_UTILITY_COMPILATION will be automatically added to the player settings.",
-    "library": "!!library!!",
+  "library": "!!library!!",
   "csrootnamespace": "!!csrootnamespace!!",
   "tagline": "!!tagline!!",
   "keywords": [
