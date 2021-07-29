@@ -4,9 +4,6 @@
   "version": "0.1.5",
   "unity": "2020.3",
   "description": "Automatic C# Script Defines for Unity3D projects.  For example, for the current project, a scripting define APPALACHIA_UTILITY_COMPILATION will be automatically added to the player settings.",
-  "library": "!!library!!",
-  "csrootnamespace": "!!csrootnamespace!!",
-  "tagline": "!!tagline!!",
   "keywords": [
     "Scripts",
     "Tool"
