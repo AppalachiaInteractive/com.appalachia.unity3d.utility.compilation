@@ -5,7 +5,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace Appalachia.Utility.Compilation
+namespace Appalachia.CI.Compilation
 {
     [InitializeOnLoad]
     internal class ScriptingDefineManager : Editor

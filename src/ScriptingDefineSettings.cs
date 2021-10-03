@@ -1,6 +1,6 @@
 using UnityEditor;
 
-namespace Appalachia.Utility.Compilation
+namespace Appalachia.CI.Compilation
 {
     internal static class ScriptingDefineSettings
     {

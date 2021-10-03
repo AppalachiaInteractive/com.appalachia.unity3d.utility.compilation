@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace Appalachia.Utility.Compilation
+namespace Appalachia.CI.Compilation
 {
     internal static class ScriptingDefineManagerUI
     {
