@@ -10,9 +10,6 @@ namespace Appalachia.CI.Compilation
     [InitializeOnLoad]
     internal class ScriptingDefineManager : Editor
     {
-
-
-
         static ScriptingDefineManager()
         {
             if (!ScriptingDefineSettings.Enabled)
@@ -58,13 +55,18 @@ namespace Appalachia.CI.Compilation
             var backup = ScriptingDefineSettings.BackupDefines;
 
             ScriptingDefineSettings.BackupDefines = string.Empty;
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(ScriptingDefineSettings.BuildTargetGroup, backup);
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(
+                ScriptingDefineSettings.BuildTargetGroup,
+                backup
+            );
         }
 
         public static string GetDefinesUnformatted()
         {
             var defineString =
-                PlayerSettings.GetScriptingDefineSymbolsForGroup(ScriptingDefineSettings.BuildTargetGroup);
+                PlayerSettings.GetScriptingDefineSymbolsForGroup(
+                    ScriptingDefineSettings.BuildTargetGroup
+                );
 
             return defineString;
         }
@@ -92,7 +94,9 @@ namespace Appalachia.CI.Compilation
                 assemblies.Select(FormatAssemblyNameAsDefine)
                           .Where(
                                name => !excludeTests ||
-                                       !(name.Contains("TEST_") || name.Contains("TESTS_") || name.Contains("_TEST"))
+                                       !(name.Contains("TEST_") ||
+                                         name.Contains("TESTS_") ||
+                                         name.Contains("_TEST"))
                            )
                           .Where(
                                name => !doFilter ||
@@ -111,7 +115,10 @@ namespace Appalachia.CI.Compilation
 
         public static string FormatAssemblyNameAsDefine(Assembly assembly)
         {
-            return assembly.FullName.Split(',')[0].ToLowerInvariant().Replace(".", "_").ToUpperInvariant();
+            return assembly.FullName.Split(',')[0]
+                           .ToLowerInvariant()
+                           .Replace(".", "_")
+                           .ToUpperInvariant();
         }
 
         public static void SaveNewDefines(List<string> defines)
@@ -120,7 +127,10 @@ namespace Appalachia.CI.Compilation
 
             var newDefineString = string.Join(";", definesLookup);
 
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(ScriptingDefineSettings.BuildTargetGroup, newDefineString);
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(
+                ScriptingDefineSettings.BuildTargetGroup,
+                newDefineString
+            );
         }
     }
 }

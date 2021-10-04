@@ -33,7 +33,7 @@ namespace Appalachia.CI.Compilation
                 "name added to the Player's scripting defines.",
                 MessageType.Info
             );
-            
+
             DrawWarnIfDisabled();
             DrawEnable();
             DrawFiltered();
@@ -45,9 +45,13 @@ namespace Appalachia.CI.Compilation
 
         private static void PostLabel(string message)
         {
-            EditorGUILayout.LabelField(message, EditorStyles.wordWrappedMiniLabel, GUILayout.ExpandWidth(true));
+            EditorGUILayout.LabelField(
+                message,
+                EditorStyles.wordWrappedMiniLabel,
+                GUILayout.ExpandWidth(true)
+            );
         }
-        
+
         private static void DrawWarnIfDisabled()
         {
             var warn = ScriptingDefineSettings.WarnIfDisabled;
@@ -59,7 +63,9 @@ namespace Appalachia.CI.Compilation
 
             if (warn)
             {
-                PostLabel("I'm warning you... whenever a compilation finishes, but this utility is disabled.");
+                PostLabel(
+                    "I'm warning you... whenever a compilation finishes, but this utility is disabled."
+                );
             }
             else
             {
@@ -86,9 +92,7 @@ namespace Appalachia.CI.Compilation
 
             if (enabled)
             {
-                PostLabel(
-                    "Scripting defines are being updated with every compilation."
-                );
+                PostLabel("Scripting defines are being updated with every compilation.");
             }
             else
             {
@@ -113,9 +117,7 @@ namespace Appalachia.CI.Compilation
 
             if (excludeTests)
             {
-                PostLabel(
-                    "Assemblies that contain 'test' will not be giving a scripting define."
-                );
+                PostLabel("Assemblies that contain 'test' will not be giving a scripting define.");
             }
             else
             {
@@ -195,21 +197,23 @@ namespace Appalachia.CI.Compilation
             {
                 _defines = ScriptingDefineManager.GetDefines();
 
-                _reorderableDefines = new ReorderableList(_defines, typeof(string), true, true, true, true)
-                {
-                    headerHeight = 1,
-                    drawElementCallback = (rect, index, isActive, isFocused) => DrawTextField(rect, index),
-                    onAddCallback = list =>
+                _reorderableDefines =
+                    new ReorderableList(_defines, typeof(string), true, true, true, true)
                     {
-                        _defines.Add("");
-                        _definesHaveChanged = true;
-                    },
-                    onRemoveCallback = list =>
-                    {
-                        _defines.RemoveAt(list.index);
-                        _definesHaveChanged = true;
-                    }
-                };
+                        headerHeight = 1,
+                        drawElementCallback =
+                            (rect, index, isActive, isFocused) => DrawTextField(rect, index),
+                        onAddCallback = list =>
+                        {
+                            _defines.Add("");
+                            _definesHaveChanged = true;
+                        },
+                        onRemoveCallback = list =>
+                        {
+                            _defines.RemoveAt(list.index);
+                            _definesHaveChanged = true;
+                        }
+                    };
 
                 _reorderableDefines.onChangedCallback += list => _definesHaveChanged = true;
             }

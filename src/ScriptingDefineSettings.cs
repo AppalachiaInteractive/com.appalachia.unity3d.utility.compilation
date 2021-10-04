@@ -4,6 +4,7 @@ namespace Appalachia.CI.Compilation
 {
     internal static class ScriptingDefineSettings
     {
+        private const string _defaultFilter = "Appalachia";
         private static readonly string _key_prefix = typeof(ScriptingDefineManager).Namespace;
         private static readonly string _key_warnIfDisabled = $"{_key_prefix}.WarnIfDisabled";
         private static readonly string _key_enabled = $"{_key_prefix}.Enabled";
@@ -11,7 +12,6 @@ namespace Appalachia.CI.Compilation
         private static readonly string _key_filterValue = $"{_key_prefix}.FilterValue";
         private static readonly string _key_excludeTests = $"{_key_prefix}.ExcludeTests";
         private static readonly string _key_backupDefines = $"{_key_prefix}.BackupDefines.{0}";
-        private const string _defaultFilter = "Appalachia";
 
         public static bool WarnIfDisabled
         {
@@ -59,7 +59,11 @@ namespace Appalachia.CI.Compilation
                     _defaultFilter
                 );
             }
-            set => EditorPrefs.SetString(string.Format(_key_backupDefines, BuildTargetGroup.ToString()), value);
+            set =>
+                EditorPrefs.SetString(
+                    string.Format(_key_backupDefines, BuildTargetGroup.ToString()),
+                    value
+                );
         }
 
         public static void Initialize()
