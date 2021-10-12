@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
+using Appalachia.Utility.Reflection.Extensions;
 using UnityEditor;
 using UnityEngine;
 
@@ -29,8 +28,12 @@ namespace Appalachia.CI.Compilation
         {
             var defines = GetDefines();
 
-            AddDefinesUsingFilter(defines);
-            SaveNewDefines(defines);
+            var changed = AddDefinesUsingFilter(defines);
+
+            if (changed)
+            {
+                SaveNewDefinesInternal(defines);
+            }
         }
 
         public static void ResetDefines()
@@ -71,15 +74,24 @@ namespace Appalachia.CI.Compilation
             return defineString;
         }
 
-        public static List<string> GetDefines()
+        public static HashSet<string> GetDefines()
         {
             var defineString = GetDefinesUnformatted();
-            var defines = defineString.Split(';').Select(s => s.Trim()).ToList();
+            var defines = new HashSet<string>();
+            var splits = defineString.Split(';');
+            
+            for (var index = 0; index < splits.Length; index++)
+            {
+                var s = splits[index];
+                var trimmed = s.Trim();
+
+                defines.Add(trimmed);
+            }
 
             return defines;
         }
 
-        private static void AddDefinesUsingFilter(List<string> defines)
+        private static bool AddDefinesUsingFilter(HashSet<string> defines)
         {
             var doFilter = ScriptingDefineSettings.Filtered;
             var filter = ScriptingDefineSettings.FilterValue;
@@ -88,29 +100,38 @@ namespace Appalachia.CI.Compilation
             var filterMid = $"_{filter.ToUpper()}_";
             var filterEnd = $"_{filter.ToUpper()}";
 
-            var assemblies = GetCandidateAssemblies();
+            var assemblies = ReflectionExtensions.GetAssemblies();
 
-            defines.AddRange(
-                assemblies.Select(FormatAssemblyNameAsDefine)
-                          .Where(
-                               name => !excludeTests ||
-                                       !(name.Contains("TEST_") ||
-                                         name.Contains("TESTS_") ||
-                                         name.Contains("_TEST"))
-                           )
-                          .Where(
-                               name => !doFilter ||
-                                       name.StartsWith(filterStart) ||
-                                       name.Contains(filterMid) ||
-                                       name.EndsWith(filterEnd)
-                           )
-            );
-        }
+            var changed = false;
+            
+            for (int i = 0; i < assemblies.Length; i++)
+            {
+                var assembly = assemblies[i];
+                var name = FormatAssemblyNameAsDefine(assembly);
 
-        public static Assembly[] GetCandidateAssemblies()
-        {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            return assemblies;
+                if (excludeTests &&
+                    (name.Contains("TEST_") || name.Contains("TESTS_") || name.Contains("_TEST")))
+                {
+                    continue;
+                }
+
+                if (doFilter &&
+                    !name.StartsWith(filterStart) &&
+                    !name.Contains(filterMid) &&
+                    !name.EndsWith(filterEnd))
+                {
+                    continue;
+                }
+
+                if (!defines.Contains(name))
+                {
+                    changed = true;
+                }
+                
+                defines.Add(name);
+            }
+
+            return changed;
         }
 
         public static string FormatAssemblyNameAsDefine(Assembly assembly)
@@ -121,11 +142,15 @@ namespace Appalachia.CI.Compilation
                            .ToUpperInvariant();
         }
 
-        public static void SaveNewDefines(List<string> defines)
+        public static void SaveNewDefines(IEnumerable<string> defines)
         {
-            var definesLookup = new HashSet<string>(defines);
+            var hashed = new HashSet<string>(defines);
+            SaveNewDefinesInternal(hashed);
+        }
 
-            var newDefineString = string.Join(";", definesLookup);
+        private static void SaveNewDefinesInternal(HashSet<string> defines)
+        {
+            var newDefineString = string.Join(";", defines);
 
             PlayerSettings.SetScriptingDefineSymbolsForGroup(
                 ScriptingDefineSettings.BuildTargetGroup,

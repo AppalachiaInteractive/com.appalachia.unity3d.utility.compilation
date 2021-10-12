@@ -15,7 +15,7 @@ namespace Appalachia.CI.Compilation
         [SettingsProvider]
         public static SettingsProvider CustomUserPreferences()
         {
-            var provider = new SettingsProvider("Preferences/Appalachia/", SettingsScope.User)
+            var provider = new SettingsProvider("Preferences/Appalachia/Scripting Defines", SettingsScope.User)
             {
                 guiHandler = s => DrawUI(), label = "Scripting Defines"
             };
@@ -195,7 +195,7 @@ namespace Appalachia.CI.Compilation
         {
             if (force || (_defines == null) || (_reorderableDefines == null))
             {
-                _defines = ScriptingDefineManager.GetDefines();
+                _defines = new List<string>(ScriptingDefineManager.GetDefines());
 
                 _reorderableDefines =
                     new ReorderableList(_defines, typeof(string), true, true, true, true)

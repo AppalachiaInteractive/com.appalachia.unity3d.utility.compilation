@@ -13,7 +13,9 @@
   "author": {
     "name": "Appalachia Interactive"
   },
-  "dependencies": {},
+  "dependencies": {
+    "com.appalachia.unity3d.utility.reflection": "0.1.5"
+  },
   "repository": {
     "url": "https://github.com/AppalachiaInteractive/com.appalachia.unity3d.utility.compilation.git",
     "type": "git"
