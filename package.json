@@ -1,7 +1,7 @@
 {
   "name": "com.appalachia.unity3d.ci.compilation",
   "displayName": "Appalachia.CI.Compilation for Unity3D",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "unity": "2020.3",
   "description": "Automatic C# Script Defines for Unity3D projects.  For example, for the current project, a scripting define APPALACHIA_UTILITY_COMPILATION will be automatically added to the player settings.",
   "keywords": [
